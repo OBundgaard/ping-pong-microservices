@@ -1,0 +1,83 @@
+services:
+    seq:
+        image: datalust/seq
+        container_name: seq
+        restart: always
+        ports:
+            - "5341:5341" 
+            - "5342:80"
+        environment:
+            - ACCEPT_EULA=Y
+        volumes:
+            - ./Data/seq:/data
+        networks:
+            - ping-pong-network
+
+    zipkin:
+        image: openzipkin/zipkin
+        container_name: zipkin
+        restart: always
+        ports:
+            - "9411:9411"
+        networks:
+            - ping-pong-network
+    
+    ping-service:
+        container_name: ping-service
+        restart: always
+        build:
+            context: .
+            dockerfile: PingService/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=5000
+        ports:
+            - "5000:5000"
+            - "5001:5001"
+        depends_on:
+            seq:
+                condition: service_started
+            zipkin:
+                condition: service_started
+            ping-database:
+                condition: service_started
+        networks:
+            - ping-pong-network
+
+    ping-database:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: ping-database
+        restart: always
+        environment:
+            SA_PASSWORD: iLuvPings4ever<3
+            ACCEPT_EULA: "Y"
+        ports:
+            - "1401:1433"
+        volumes:
+            - ./Data/pingdb:/var/opt/mssql/data
+        networks:
+            - ping-pong-network
+
+    pong-service:
+        container_name: pong-service
+        restart: always
+        build:
+            context: .
+            dockerfile: PongService/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=5000
+        ports:
+            - "5002:5000"
+            - "5003:5001"
+        depends_on:
+            seq:
+                condition: service_started
+            zipkin:
+                condition: service_started
+        networks:
+            - ping-pong-network
+
+networks:
+    ping-pong-network:
+        driver: bridge

@@ -1,0 +1,8 @@
+/Data
+/.vs
+/Core/bin/Debug/net8.0
+/Core/obj
+/PingService/bin/Debug/net8.0
+/PingService/obj
+/PongService/bin/Debug/net8.0
+/PongService/obj
