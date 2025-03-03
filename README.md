@@ -59,6 +59,32 @@ This class is responsible for configuring the **tracer** and **activity source**
 ### Activity
 An activity is started at the start of a function inside a **controller** and **repository**, be descriptive (i.e. "Credential Repository - POST")
 
+# Featurehub
+## Docker Setup
+## Project Setup
+### NuGet Packages
+- **FeatureHub.SDK**
+### Featurehub UI setup
+#### Super Admin
+You need to create an **account** to act as the **super** admin for the **organization**.
+#### Organization
+You need to configure an **organization** with a **portfolio** for a set of applications.
+#### Application
+You need to create an **application** with a description.
+#### Environment
+You can create a **development environment** for an **application**.
+#### Service account
+You need to create a **service account** for each **application**.
+#### Service access
+You need to assign **permissions** your **service account** for the various **environments**.
+#### Feature
+You need to create a **feature** given a **name**, for example `Feature Test`, and a **code-friendly key**, for example `FeatureTest`, and last but not least, a **feature type** - typically this is set to **bool**.
+## Logic
+### Featureservice
+This class is responsible for configuring the **feraturehub** instance, this class is a global class placed in the **Core**.
+### Feature
+A feature is checked simply by calling `FeatureService.featurehub["KEY"].IsEnabled`, typically inside the controller classes.
+
 # RabbitMQ
 ## Docker Setup
 ## Project Setup

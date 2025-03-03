@@ -15,6 +15,13 @@ public class PermissionController(IRepository<Permissions> repository) : Control
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Permission Controller @ Ping Service] : POST"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Permission Controller @ Ping Service] : POST operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Verify entry
             if (entry == null)
             {
@@ -35,6 +42,13 @@ public class PermissionController(IRepository<Permissions> repository) : Control
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Permission Controller @ Ping Service] : GET"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Permission Controller @ Ping Service] : GET operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Get and verify existence
             var permissions = await repository.GetAsync(id);
             if (permissions == null)
@@ -53,6 +67,13 @@ public class PermissionController(IRepository<Permissions> repository) : Control
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Permission Controller @ Ping Service] : PUT"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Permission Controller @ Ping Service] : PUT operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Verify entry
             if (entry == null)
             {
@@ -88,6 +109,13 @@ public class PermissionController(IRepository<Permissions> repository) : Control
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Permission Controller @ Ping Service] : DELETE"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Permission Controller @ Ping Service] : DELETE operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Get and verify existence
             var permissions = await repository.GetAsync(id);
             if (permissions == null)

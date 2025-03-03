@@ -15,6 +15,13 @@ public class CredentialController(IRepositoryAll<Credentials> repository) : Cont
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Credential Controller @ Ping Service] : POST"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Credential Controller @ Ping Service] : POST operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Verify entry
             if (entry == null)
             {
@@ -35,6 +42,13 @@ public class CredentialController(IRepositoryAll<Credentials> repository) : Cont
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Credential Controller @ Ping Service] : GET"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Credential Controller @ Ping Service] : GET operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Get and verify existence
             var credentials = await repository.GetAsync(id);
             if (credentials == null)
@@ -53,6 +67,13 @@ public class CredentialController(IRepositoryAll<Credentials> repository) : Cont
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Credential Controller @ Ping Service] : GET ALL"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Credential Controller @ Ping Service] : GET ALL operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Get all
             var credentials = await repository.GetAllAsync();
 
@@ -66,6 +87,13 @@ public class CredentialController(IRepositoryAll<Credentials> repository) : Cont
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Credential Controller @ Ping Service] : PUT"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Credential Controller @ Ping Service] : PUT operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Verify entry
             if (entry == null)
             {
@@ -101,6 +129,13 @@ public class CredentialController(IRepositoryAll<Credentials> repository) : Cont
     {
         using (var activity = MonitorService.ActivitySource.StartActivity("[Credential Controller @ Ping Service] : DELETE"))
         {
+            // Featurehub
+            if (!FeatureService.featurehub["ServiceTest"].IsEnabled)
+            {
+                MonitorService.Log.Warning("[Credential Controller @ Ping Service] : DELETE operation FAILED, feature is disabled");
+                return BadRequest(); // Return 400
+            }
+
             // Get and verify existence
             var credentials = await repository.GetAsync(id);
             if (credentials == null)
