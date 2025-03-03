@@ -83,7 +83,7 @@ You need to create a **feature** given a **name**, for example `Feature Test`, a
 ### Featureservice
 This class is responsible for configuring the **feraturehub** instance, this class is a global class placed in the **Core**.
 ### Feature
-A feature is checked simply by calling `FeatureService.featurehub["KEY"].IsEnabled`, typically inside the controller classes.
+A feature is checked simply by calling `FeatureService.featurehub["KEY"].IsEnabled`, typically inside the controller classes. Typically you'd make **controller level** features and **method level** features, for example `UserController` and `UserPost`.
 
 # RabbitMQ
 ## Docker Setup
